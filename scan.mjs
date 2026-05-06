@@ -25,6 +25,7 @@ const PORTALS_PATH = 'portals.yml';
 const SCAN_HISTORY_PATH = 'data/scan-history.tsv';
 const PIPELINE_PATH = 'data/pipeline.md';
 const APPLICATIONS_PATH = 'data/applications.md';
+const CSV_PATH = 'companies_merged.csv';
 
 // Ensure required directories exist (fresh setup)
 mkdirSync('data', { recursive: true });
@@ -247,6 +248,26 @@ async function parallelFetch(tasks, limit) {
   return results;
 }
 
+// ── WLB data from companies_merged.csv ──────────────────────────────
+
+function loadWlbData() {
+  if (!existsSync(CSV_PATH)) return new Map();
+  const lines = readFileSync(CSV_PATH, 'utf-8').trim().split('\n');
+  const headers = lines[0].split(',').map(h => h.trim());
+  const nameIdx = headers.indexOf('name');
+  const wlbIdx = headers.indexOf('glassdoor_ds_it_wlb_score');
+  const empIdx = headers.indexOf('employee_count_estimate');
+  const map = new Map();
+  for (const line of lines.slice(1)) {
+    const cols = line.split(',');
+    const name = (cols[nameIdx] || '').trim().toLowerCase();
+    const wlb = parseFloat(cols[wlbIdx]);
+    const emp = parseInt(cols[empIdx]);
+    if (name) map.set(name, { wlb: isNaN(wlb) ? null : wlb, employees: isNaN(emp) ? null : emp });
+  }
+  return map;
+}
+
 // ── Main ────────────────────────────────────────────────────────────
 
 async function main() {
@@ -254,6 +275,12 @@ async function main() {
   const dryRun = args.includes('--dry-run');
   const companyFlag = args.indexOf('--company');
   const filterCompany = companyFlag !== -1 ? args[companyFlag + 1]?.toLowerCase() : null;
+
+  const minWlbFlag = args.indexOf('--min-wlb');
+  const minWlb = minWlbFlag !== -1 ? parseFloat(args[minWlbFlag + 1]) : null;
+
+  const minEmpFlag = args.indexOf('--min-employees');
+  const minEmployees = minEmpFlag !== -1 ? parseInt(args[minEmpFlag + 1]) : null;
 
   // 1. Read portals.yml
   if (!existsSync(PORTALS_PATH)) {
@@ -265,15 +292,34 @@ async function main() {
   const companies = config.tracked_companies || [];
   const titleFilter = buildTitleFilter(config.title_filter);
 
+  // Load WLB data for optional pre-filtering
+  const wlbData = (minWlb !== null || minEmployees !== null) ? loadWlbData() : new Map();
+
   // 2. Filter to enabled companies with detectable APIs
-  const targets = companies
-    .filter(c => c.enabled !== false)
+  const preFilter = companies.filter(c => c.enabled !== false);
+  const wlbFiltered = preFilter.filter(c => {
+    if (!wlbData.size) return true;
+    const data = wlbData.get(c.name.toLowerCase());
+    if (!data) return true; // not in CSV — pass through
+    if (minWlb !== null && data.wlb !== null && data.wlb < minWlb) return false;
+    if (minEmployees !== null && data.employees !== null && data.employees < minEmployees) return false;
+    return true;
+  });
+  const wlbSkippedCount = preFilter.length - wlbFiltered.length;
+
+  const targets = wlbFiltered
     .filter(c => !filterCompany || c.name.toLowerCase().includes(filterCompany))
     .map(c => ({ ...c, _api: detectApi(c) }))
     .filter(c => c._api !== null);
 
-  const skippedCount = companies.filter(c => c.enabled !== false).length - targets.length;
+  const skippedCount = wlbFiltered.length - targets.length;
 
+  if (minWlb !== null || minEmployees !== null) {
+    const filters = [];
+    if (minWlb !== null) filters.push(`DS WLB >= ${minWlb}`);
+    if (minEmployees !== null) filters.push(`employees >= ${minEmployees}`);
+    console.log(`WLB/size filter (${filters.join(', ')}): ${wlbSkippedCount} companies skipped`);
+  }
   console.log(`Scanning ${targets.length} companies via API (${skippedCount} skipped — no API detected)`);
   if (dryRun) console.log('(dry run — no files will be written)\n');
 
@@ -333,6 +379,7 @@ async function main() {
   console.log(`Portal Scan — ${date}`);
   console.log(`${'━'.repeat(45)}`);
   console.log(`Companies scanned:     ${targets.length}`);
+  if (wlbSkippedCount > 0) console.log(`Skipped (WLB/size):    ${wlbSkippedCount}`);
   console.log(`Total jobs found:      ${totalFound}`);
   console.log(`Filtered by title:     ${totalFiltered} removed`);
   console.log(`Duplicates:            ${totalDupes} skipped`);

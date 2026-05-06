@@ -16,6 +16,7 @@
 | article-digest.md | `article-digest.md` (if exists) | ALWAYS (detailed proof points) |
 | profile.yml | `config/profile.yml` | ALWAYS (candidate identity and targets) |
 | _profile.md | `modes/_profile.md` | ALWAYS (user archetypes, narrative, negotiation) |
+| companies_merged.csv | `companies_merged.csv` (if exists) | Block D: WLB lookup — read `glassdoor_ds_it_wlb_score` by company name before WebSearch |
 
 **RULE: NEVER hardcode metrics from proof points.** Read them from cv.md + article-digest.md at evaluation time.
 **RULE: For article/project metrics, article-digest.md takes precedence over cv.md.**
@@ -29,7 +30,7 @@ The evaluation uses 6 blocks (A-F) with a global score of 1-5:
 
 | Dimension | What it measures |
 |-----------|-----------------|
-| Match con CV | Skills, experience, proof points alignment |
+| CV Match | Skills, experience, proof points alignment |
 | North Star alignment | How well the role fits the user's target archetypes (from _profile.md) |
 | Comp | Salary vs market (5=top quartile, 1=well below) |
 | Cultural signals | Company culture, growth, stability, remote policy |
@@ -118,7 +119,7 @@ After detecting archetype, read `modes/_profile.md` for the user's specific fram
 
 | Tool | Use |
 |------|-----|
-| WebSearch | Comp research, trends, company culture, LinkedIn contacts, fallback for JDs |
+| WebSearch | Comp research (after CSV lookup), trends, company culture, LinkedIn contacts, fallback for JDs |
 | WebFetch | Fallback for extracting JDs from static pages |
 | Playwright | Verify offers (browser_navigate + browser_snapshot). **NEVER 2+ agents with Playwright in parallel.** |
 | Read | cv.md, _profile.md, article-digest.md, cv-template.html |

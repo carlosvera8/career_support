@@ -1,0 +1,244 @@
+name,greenhouse_slug,lever_slug,glassdoor_wlb_score,employee_count_estimate,notes,glassdoor_ds_it_wlb_score
+Airbnb,airbnb,,4.1,6000.0,,4.2
+Netflix,netflix,,3.9,13000.0,,3.5
+Lyft,lyft,,3.8,5000.0,,4.8
+DoorDash,doordash,,3.6,8000.0,,1.5
+OpenAI,openai,,4.2,1500.0,,3.6
+Databricks,databricks,,4.3,5000.0,,3.5
+Coinbase,coinbase,,3.9,3500.0,,2.9
+Reddit,reddit,,4.0,2000.0,,3.6
+Figma,figma,,4.5,1200.0,,3.4
+Robinhood,robinhood,,3.7,2000.0,,3.2
+Dropbox,dropbox,,4.2,2500.0,Remote-first company,4.2
+HubSpot,hubspot,,4.5,7000.0,,3.5
+Spotify,spotify,,4.3,9000.0,,4.3
+Snap,snap,,3.8,5000.0,,3.5
+Twilio,twilio,,4.0,6000.0,,4.3
+Zoom,zoom,,4.1,7000.0,,4.1
+Asana,asana,,4.4,1700.0,,4.2
+Waymo,waymo,,4.2,2500.0,,3.6
+Palantir,palantir,,3.5,4000.0,Lower WLB score — remove if not desired,2.9
+Twitch,twitch,,3.9,1000.0,Amazon subsidiary,3.8
+Qualtrics,qualtrics,,4.0,5000.0,,3.8
+Roblox,roblox,,4.1,2000.0,,4.0
+Stripe,,stripe,3.8,8000.0,,3.2
+Cloudflare,,cloudflare,4.1,3500.0,,4.1
+GitLab,,gitlab,4.3,2000.0,Fully remote company,4.3
+PagerDuty,,pagerduty,4.0,1000.0,,4.0
+Instacart,,instacart,3.9,3000.0,,3.9
+Confluent,,confluent,4.1,3000.0,,4.1
+Anthropic,,anthropic,4.5,1000.0,,4.5
+Scale AI,,scaleai,3.7,1000.0,,3.7
+Duolingo,,duolingo,4.4,700.0,Strong ML team; slightly under 1k employees,4.4
+Replit,,replit,4.2,200.0,Small but notable AI-first company; remove if strict about size,4.2
+Google,,,4.2,180000.0,Uses own careers portal,4.2
+Microsoft,,,4.0,220000.0,Uses own careers portal,3.7
+Meta,,,3.9,70000.0,Uses own careers portal,2.6
+Apple,,,3.8,160000.0,Rarely fully remote; low yield expected,4.2
+Salesforce,,,4.1,70000.0,,4.3
+Adobe,,,4.2,30000.0,,3.9
+Nvidia,,,4.3,30000.0,,4.1
+IBM,,,3.8,280000.0,,4.1
+LinkedIn,,,4.2,20000.0,Microsoft subsidiary; uses own portal,3.3
+Amazon,,,3.2,1500000.0,Low WLB score — remove if not desired,3.1
+Intuit,,,4.3,18000.0,,3.2
+ServiceNow,,,4.2,22000.0,,4.0
+Workday,,,4.3,18000.0,,4.1
+Snowflake,,,3.9,7000.0,,3.4
+Datadog,datadog,,4.2,5000.0,,4.0
+MongoDB,mongodb,,4.3,5000.0,,3.8
+Okta,okta,,4.1,6000.0,,4.1
+Brex,brex,,3.9,1200.0,,3.9
+Nuro,nuro,,4.0,1000.0,Autonomous delivery; strong ML team,4.0
+Plaid,plaid,,4.3,1000.0,,4.3
+Rippling,rippling,,3.9,3000.0,,3.9
+Elastic,elastic,,4.3,3500.0,Remote-first company,4.3
+HashiCorp,hashicorp,,4.2,2000.0,Now IBM subsidiary; remote-first,4.2
+Zendesk,zendesk,,4.0,6000.0,,4.0
+DocuSign,docusign,,4.0,7000.0,,4.0
+Splunk,splunk,,4.0,8000.0,Now Cisco subsidiary,4.0
+New Relic,newrelic,,4.0,2500.0,,4.0
+Dataiku,dataiku,,4.1,1000.0,ML platform company; strong data science hiring,4.1
+Weights & Biases,wandb,,4.4,500.0,ML tooling; remote-friendly; under 1k but notable AI hiring,4.4
+Hugging Face,,huggingface,4.5,300.0,Fully remote; small but landmark ML company,4.5
+Cohere,cohere,,4.3,500.0,AI/LLM company; strong research + applied scientist roles,4.3
+Mistral AI,,mistral,4.3,200.0,AI/LLM; small but high-paying for ML roles,4.3
+xAI,,xai,3.8,1000.0,Elon Musk AI company; high comp but unknown WLB,3.8
+Perplexity AI,perplexityai,,4.2,300.0,AI search; small but high-paying,4.2
+Veeva Systems,,veeva,4.4,7000.0,Healthcare SaaS; excellent WLB reputation,3.3
+Carta,,carta,3.9,2000.0,,3.9
+Samsara,,samsara,4.0,3000.0,,4.0
+Amplitude,,amplitude,4.2,700.0,Product analytics; strong data science hiring,4.2
+JPMorgan Chase,,,3.6,310000.0,Fortune 500; large ML/AI team; uses own portal,4.7
+Goldman Sachs,,,2.9,45000.0,Fortune 500; very high comp but low WLB — remove if undesired,3.6
+Capital One,,,4.0,55000.0,Fortune 500; known as a tech-forward bank with strong data culture,3.4
+American Express,,,4.0,77000.0,Fortune 500; strong data science team,4.5
+Visa,,,4.3,26000.0,Fortune 500; excellent WLB; strong ML team for fraud/payments,4.1
+Mastercard,,,4.2,32000.0,Fortune 500; strong data science and AI team,4.1
+PayPal,,,3.7,27000.0,Fortune 500,3.9
+Fidelity Investments,,,4.1,70000.0,Fortune 500; strong quant/ML team,4.1
+Charles Schwab,,,3.9,35000.0,Fortune 500,3.7
+BlackRock,,,3.8,20000.0,Fortune 500; strong quant finance and ML hiring,3.5
+Morgan Stanley,,,3.5,80000.0,Fortune 500; large tech/data team,3.7
+Citigroup,,,3.7,240000.0,Fortune 500,4.0
+Bank of America,,,3.8,213000.0,Fortune 500,4.0
+Oracle,,,3.7,143000.0,Fortune 500; large cloud/data platform; uses own portal,4.2
+Cisco,,,4.0,85000.0,Fortune 500,4.3
+Intel,,,3.8,110000.0,Fortune 500,4.1
+Qualcomm,,,4.0,51000.0,Fortune 500; strong ML/AI chip research,3.2
+Broadcom,,,3.6,60000.0,Fortune 500,3.6
+Dell Technologies,,,4.1,120000.0,Fortune 500,4.1
+HP Inc,,,4.0,58000.0,Fortune 500,4.0
+Hewlett Packard Enterprise,,,3.9,62000.0,Fortune 500,3.9
+T-Mobile,,,3.9,75000.0,Fortune 500; known for data/ML work in telecom,3.9
+Verizon,,,3.7,105000.0,Fortune 500,3.7
+AT&T,,,3.7,160000.0,Fortune 500,3.7
+Accenture,,,3.8,750000.0,Fortune 500; large AI/data practice,3.6
+UnitedHealth Group,,,3.7,400000.0,Fortune 500; Optum subsidiary has large data science team,3.7
+CVS Health,,,3.6,300000.0,Fortune 500; Aetna subsidiary has analytics team,4.1
+Cigna,,,3.9,73000.0,Fortune 500,3.9
+Johnson & Johnson,,,4.1,150000.0,Fortune 500; strong data science and AI team,4.1
+Pfizer,,,4.2,88000.0,Fortune 500; strong ML in drug discovery,3.2
+Merck,,,4.2,68000.0,Fortune 500,3.9
+Eli Lilly,,,4.3,43000.0,Fortune 500; expanding AI/ML team,3.4
+AbbVie,,,4.1,50000.0,Fortune 500,4.0
+Abbott Laboratories,,,4.0,115000.0,Fortune 500,4.0
+Bristol-Myers Squibb,,,4.1,34000.0,Fortune 500,4.1
+Target,,,3.8,440000.0,Fortune 500; strong data science team at HQ (Minneapolis),3.8
+Nike,,,3.9,79000.0,Fortune 500; growing ML/data team,4.4
+Home Depot,,,3.6,465000.0,Fortune 500; large data science team,3.6
+Walmart,,,3.3,2100000.0,Fortune 500; large ML team; lower WLB — remove if undesired,4.3
+Disney,,,3.8,190000.0,Fortune 500; growing ML/data team across streaming and parks,3.6
+Comcast / NBCUniversal,,,3.7,186000.0,Fortune 500,3.7
+Warner Bros Discovery,,,3.7,35000.0,Fortune 500,3.7
+Lockheed Martin,,,4.0,114000.0,Fortune 500; large ML/AI team (requires US citizenship for many roles),4.7
+Boeing,,,3.7,156000.0,Fortune 500,4.5
+Raytheon Technologies,,,3.8,185000.0,Fortune 500,4.0
+Northrop Grumman,,,4.0,95000.0,Fortune 500,4.1
+General Dynamics,,,3.9,107000.0,Fortune 500,3.9
+Booz Allen Hamilton,,,3.8,33000.0,Fortune 500; large data science / AI practice,4.2
+Leidos,,,3.9,47000.0,Fortune 500; AI/ML for government contracts,4.1
+SAIC,,,3.9,26000.0,Fortune 500; AI/ML for government contracts,3.9
+Tesla,,,3.2,127000.0,Fortune 500; high comp but notoriously poor WLB — remove if undesired,2.8
+General Motors,,,3.9,163000.0,"Fortune 500; large data science team (Cruise, OnStar)",4.5
+Ford,,,3.9,177000.0,Fortune 500; growing AI/ML team,4.4
+Deloitte,,,3.9,460000.0,Fortune 500; large AI/data analytics practice,3.9
+McKinsey & Company,,,3.5,45000.0,Fortune 500; QuantumBlack data science arm,2.6
+EY,,,3.7,395000.0,Fortune 500,3.3
+PwC,,,3.8,364000.0,Fortune 500,3.4
+3M,,,3.9,92000.0,Fortune 500; growing data science team,3.9
+Honeywell,,,3.8,95000.0,Fortune 500; AI/ML for industrial automation,4.1
+General Electric,,,3.7,170000.0,Fortune 500; GE Digital and GE Research have ML teams,3.7
+Atlassian,,,3.1,,,3.2
+UnitedHealth Group / Optum,,,3.7,,,3.7
+USAA,,,3.2,,,3.2
+Allstate,,,3.4,,,3.4
+Experian,,,4.1,,,4.1
+Block (Square/Cash App),,,3.8,,,3.8
+Shopify,,,3.5,,,3.5
+Pinterest,,,3.9,,,3.9
+Zillow,,,3.6,,,3.6
+Amgen,,,3.7,,,3.7
+Automattic,automattic,,3.9,1500.0,Fully distributed; recent layoffs (~16% in Apr 2025),3.9
+Zapier,zapier,,4.2,1200.0,Fully remote since founding; profitable,4.2
+Doist,,,4.4,100.0,Fully async remote; 4-day work week culture,4.4
+MotherDuck / DuckDB Labs,,,,100.0,Very small DuckDB-Labs commercial arm; remote,
+Smartsheet,smartsheet,,3.9,4000.0,Acquired by Vista/Blackstone Jan 2025,4.3
+Box,boxinc,,4.0,2700.0,B2B SaaS; remote-friendly,4.1
+NetApp,,,3.9,12000.0,Storage; hybrid; consistent WLB rep,4.5
+SAP,,,4.3,108000.0,Hybrid; large established mature DS function,4.3
+VMware (Broadcom),,,4.4,30000.0,Now Broadcom subsidiary; culture in flux,4.4
+Pinecone,pineconeio,,4.3,250.0,Vector DB; AI-adjacent,4.3
+Roboflow,roboflow,,3.8,200.0,Computer vision; remote,3.8
+Fidelity,,,4.1,70000.0,Note: also in companies.csv as Fidelity Investments,4.1
+Vanguard,,,4.0,20000.0,Hybrid; traditional finance culture,4.0
+Progressive,,,3.6,60000.0,Insurance; hybrid,3.6
+Geico,,,2.4,30000.0,Low WLB; SWE roles rated 3.7,3.7
+Elevance Health,,,3.5,100000.0,Healthcare insurer (formerly Anthem),3.5
+Epic Systems,,,2.3,13000.0,Madison WI in-office only; low WLB,2.3
+Oracle Health (Cerner),,,4.0,25000.0,Cerner now part of Oracle; mostly hybrid,4.0
+Autodesk,,,4.2,14000.0,Hybrid; 6-week sabbatical every 4 years,4.2
+Pegasystems,,,3.9,6000.0,Mature enterprise SaaS,3.2
+Teladoc,,,3.6,5500.0,Telehealth; remote-friendly,3.6
+Hims & Hers,,,2.8,1700.0,Telehealth; consumer-fast pace; low WLB,2.8
+Wix,,,4.1,5500.0,Israel HQ; remote-friendly,4.1
+Squarespace,,,4.2,1500.0,NY-centered; SWE WLB=4.4,4.4
+Etsy,etsy,,4.3,2400.0,Marketplace; remote-friendly,4.3
+Upwork,upwork,,4.1,800.0,Marketplace; remote-friendly,4.1
+Fiverr,,,4.1,1100.0,Marketplace; remote-friendly,4.1
+Miro,miro,,3.9,1500.0,Remote-first; recent RTO pressure,3.9
+Notion,notion,,4.2,1200.0,Hybrid; AI-forward product,4.2
+Canva,canva,,4.1,5000.0,Australia HQ; remote-friendly,4.0
+Calendly,calendly,,3.6,600.0,Remote-first; smaller DS function,3.6
+Deel,,deel,4.3,6000.0,Fully remote; global; fast pace,4.3
+Remote.com,,remotecom,3.4,1500.0,Fully remote; SWE WLB=3.6,3.6
+Ramp,ramp,,3.3,1000.0,Hyper-growth FinTech; intense pace,3.3
+Mercury,,mercury,3.9,700.0,FinTech; 40-hour-week reputation,3.9
+Airtable,airtable,,4.0,1000.0,Layoffs; SWE WLB=4.6,4.6
+Grammarly,grammarly,,3.7,1000.0,NLP/LLM; remote-friendly; some layoffs,3.7
+Discord,discord,,3.8,800.0,Consumer comms; SWE WLB=4.4,4.4
+Linear,,linear,,100.0,Very small; remote-first,
+Vercel,,vercel,3.6,600.0,Dev infra; product is 24/7,3.6
+Supabase,,supabase,,150.0,Remote-first; small; fast pace,
+Coursera,coursera,,4.0,1200.0,EdTech; remote-friendly,4.0
+Khan Academy,khanacademy,,4.3,270.0,Nonprofit EdTech; mission-driven; flexible,4.3
+DataStax,datastax,,3.9,600.0,Now part of IBM; remote-friendly,3.9
+Alteryx,,,3.8,2000.0,Acquired by Clearlake/Insight 2024; SWE WLB=4.3,4.3
+SAS,,,4.4,12000.0,Private; very strong WLB reputation; 35-hr week,4.4
+Teradata,teradata,,4.1,6500.0,Remote-friendly; mature data warehouse,4.1
+Arm,arm,,4.4,7500.0,Chips/AI; hybrid,4.4
+Eventbrite,eventbrite,,3.8,800.0,Recent layoffs affecting WLB,3.8
+MITRE,,,4.1,9000.0,Nonprofit research/defense; flexible,4.1
+RAND,,,4.1,2000.0,Nonprofit research; analyst WLB lower (3.2),4.1
+Booz Allen,,,4.3,35800.0,Federal consulting; utilization pressure varies,4.3
+Federal Reserve Banks,,,4.0,23000.0,Aggregate of regional Reserve Banks (NY/Board avg),4.0
+Bloomberg,,,4.0,22000.0,FinTech/Media; NY office-heavy,4.0
+Accenture Federal,,,4.1,20000.0,Accenture Federal Services LLC; US-government-only subsidiary; security clearance often required; separate Glassdoor page from parent Accenture,4.1
+Deltek,,,4.7,3000.0,Top 10 in Glassdoor 2024 Employees Choice; project-based ERP,4.7
+Cengage Group,,,3.7,4000.0,EdTech publisher; recent layoffs,3.7
+Quest Software,,,3.7,3500.0,Mature enterprise IT mgmt software,3.7
+Upstart,upstart,,3.9,1100.0,AI-driven lending; SWE WLB=4.4,4.4
+UserGems,,,5.0,100.0,Small SaaS; very high WLB,5.0
+Abnormal Security,,abnormalsecurity,3.3,1500.0,Email security/AI; intense pace,3.3
+LogicGate,logicgate,,4.2,250.0,GRC SaaS; remote-friendly,4.2
+Faire,faire,,3.4,1500.0,Wholesale marketplace; SWE WLB=3.1,3.1
+Renaissance,,,3.7,2500.0,K-12 EdTech (Renaissance Learning); recent layoffs,3.7
+Rec Room,,recroom,4.6,300.0,VR social gaming; very high WLB,4.6
+VGS,,,3.7,200.0,Very Good Security; ~95% remote,3.7
+VAST Data,,,3.4,800.0,Storage/AI infra; mixed WLB feedback,3.4
+Sorcero,,,2.8,100.0,Small AI/NLP; reports of 60-80hr weeks,2.8
+McGraw Hill,,,4.1,5000.0,EdTech publisher; mature; remote-friendly,4.1
+Patreon,patreon,,3.7,400.0,Creator platform; SWE WLB=4.1; mixed culture,4.1
+Beekeeper,,,4.2,250.0,Frontline workforce app; Zurich HQ,4.2
+DealHub.io,,,3.8,200.0,Sales SaaS startup; Israel-based,3.8
+Census,,getcensus,4.5,100.0,Reverse ETL; small but high WLB,4.5
+Intrado,,,4.0,9000.0,Comm tech; private equity-owned,4.0
+Funded.club,,,4.4,50.0,Fixed-fee startup recruiting agency; remote,4.4
+Workiva,workiva,,4.4,2700.0,SaaS for financial reporting; SWE WLB=4.8,4.8
+MissionWired,,,2.3,200.0,Digital fundraising; very low WLB,2.3
+Workera,,,4.0,100.0,AI skills assessment; remote,4.0
+Jenius Bank,,,3.8,500.0,Digital bank arm of SMBC Manubank,3.8
+Goinstacare,,,,,Small/early-stage; not surfaced on Glassdoor,
+Uplers,,,4.0,1000.0,India-based tech talent agency,4.0
+Quantum,,,3.7,800.0,Storage; data protection; been through layoffs,3.7
+Canonical,,,3.3,1200.0,Ubuntu maker; remote-first; rigorous interview loop,3.3
+Kemecon,,,,,Not on Glassdoor; could not verify,
+DigitalOcean,digitalocean77,,3.8,1300.0,Cloud infra; remote-friendly; some on-call concerns,3.8
+AngelOne,,,3.7,4500.0,India stockbroker; long-hours culture concerns,3.7
+Appcues,,appcues,4.7,100.0,Product adoption SaaS; remote-first; very high WLB,4.7
+Arkency,,,,30.0,Remote Ruby/Rails consultancy; not on Glassdoor,
+Awesome Motive,,,3.4,300.0,"WordPress plugin company (WPBeginner, OptinMonster); fully remote",3.4
+Buffer,,,4.2,90.0,Social media tools; fully remote; 4-day work week,4.2
+Constructor,,,4.5,250.0,AI ecommerce search; remote,4.5
+Contra,,,,100.0,Freelance platform; concerning WLB reports; no clear numerical rating,
+DuckDuckGo,,,4.8,250.0,Search/privacy; fully remote; very high WLB,4.8
+Bold,,,3.9,700.0,LiveCareer parent (resume tools); private equity,3.9
+Akamai Technologies,,,4.5,10500.0,CDN/security; mature; remote-friendly,4.5
+Cloudbeds,,,4.3,700.0,Hospitality SaaS; remote-friendly,4.3
+Mentorsity,,,4.2,50.0,Small India-based mentorship platform; remote-friendly,4.2
+Expert Thinking,,,,100.0,UK consultancy; limited Glassdoor data,
+iVisa,,,4.5,200.0,Travel/visa SaaS; uses Breezy ATS; remote,4.5
+Affordmate,,,,50.0,Small India-based; very limited public data,
+Xapo Bank,,,3.5,250.0,Crypto-friendly bank; remote,3.5
+Symetra,,,4.1,2000.0,Insurance/retirement; remote-first,4.1
+Docker,,,2.8,400.0,Container company; SWE WLB=4.2; overall low,4.2
