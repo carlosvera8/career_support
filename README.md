@@ -66,15 +66,15 @@ Built by someone who used it to evaluate 740+ job offers, generate 100+ tailored
 
 | Feature | Description |
 |---------|-------------|
-| **Auto-Pipeline** | Paste a URL, get a full evaluation + PDF + tracker entry |
-| **6-Block Evaluation** | Role summary, CV match, level strategy, comp research, personalization, interview prep (STAR+R) |
-| **Interview Story Bank** | Accumulates STAR+Reflection stories across evaluations -- 5-10 master stories that answer any behavioral question |
-| **Negotiation Scripts** | Salary negotiation frameworks, geographic discount pushback, competing offer leverage |
-| **ATS PDF Generation** | Keyword-injected CVs with Space Grotesk + DM Sans design |
-| **Portal Scanner** | 45+ companies pre-configured (Anthropic, OpenAI, ElevenLabs, Retool, n8n...) + custom queries across Ashby, Greenhouse, Lever, Wellfound |
-| **Batch Processing** | Parallel evaluation with `claude -p` workers, resumable, PID-locked |
+| **Auto-Pipeline** | Paste a URL → full evaluation + PDF + tracker entry |
+| **6-Block Evaluation** | CV match, level strategy, comp research, gaps, STAR+R interview prep |
+| **Interview Story Bank** | Accumulates STAR+R stories across evaluations into a reusable master bank |
+| **Negotiation Scripts** | Salary negotiation, geo-discount pushback, competing offer leverage |
+| **ATS PDF Generation** | Keyword-injected CVs per listing |
+| **Portal Scanner** | 45+ pre-configured companies across Ashby, Greenhouse, Lever, Wellfound |
+| **Batch Processing** | Parallel `claude -p` workers, resumable |
 | **Dashboard TUI** | Terminal UI to browse, filter, and sort your pipeline |
-| **Human-in-the-Loop** | AI evaluates and recommends, you decide and act. The system never submits an application -- you always have the final call |
+| **CSV Export** | `node export-csv.mjs` → `output/applications.csv` for spreadsheet viewing |
 | **Pipeline Integrity** | Automated merge, dedup, status normalization, health checks |
 
 ## Quick Start
@@ -133,116 +133,53 @@ Career-ops is a single slash command with multiple modes:
 
 Or just paste a job URL or description directly -- career-ops auto-detects it and runs the full pipeline.
 
+### Export to CSV
+
+To view your tracker as a spreadsheet (Excel, Google Sheets):
+
+```bash
+node export-csv.mjs
+# → output/applications.csv
+```
+
+This is read-only -- it never modifies `data/applications.md`.
+
 ## Batch Processing
 
 Process multiple offers in parallel with `claude -p` workers. Each worker runs the full pipeline: A-F evaluation, PDF generation, and tracker entry.
 
-### Setup
-
-Add offers to `batch/batch-input.tsv` (tab-separated):
-
-```tsv
-id	url	source	notes
-1	https://jobs.example.com/role-a	LinkedIn	
-2	https://greenhouse.io/company/role-b	Greenhouse	priority
-3	https://ashby.io/company/role-c	Ashby	
-```
-
-### Run
+Add offers to `batch/batch-input.tsv`, then run:
 
 ```bash
-# Preview pending offers without processing
-./batch/batch-runner.sh --dry-run
-
-# Process all pending offers (sequential)
-./batch/batch-runner.sh
-
-# Process 3 at a time in parallel
-./batch/batch-runner.sh --parallel 3
-
-# Resume from a specific offer ID
-./batch/batch-runner.sh --start-from 10
-
-# Retry only failed offers
-./batch/batch-runner.sh --retry-failed
-
-# Skip PDF/tracker for offers scoring below 3.5
-./batch/batch-runner.sh --min-score 3.5
-
-# Full example: 4 workers, skip low scores, max 3 retries
-./batch/batch-runner.sh --parallel 4 --min-score 3.5 --max-retries 3
+./batch/batch-runner.sh                        # Sequential
+./batch/batch-runner.sh --parallel 3           # 3 concurrent workers
+./batch/batch-runner.sh --dry-run              # Preview without processing
+./batch/batch-runner.sh --retry-failed         # Retry failed offers only
+./batch/batch-runner.sh --min-score 3.5        # Skip PDF/tracker below 3.5
 ```
 
-### Options
-
-| Flag | Default | Description |
-|------|---------|-------------|
-| `--parallel N` | `1` | Number of concurrent `claude -p` workers |
-| `--dry-run` | off | Preview pending offers without processing |
-| `--retry-failed` | off | Only retry offers marked as `failed` |
-| `--start-from N` | `0` | Skip offers with ID below N |
-| `--max-retries N` | `2` | Max retry attempts per offer |
-| `--min-score N` | `0` | Skip PDF/tracker for offers below this score |
-
-### Outputs
-
-| Location | Contents |
-|----------|----------|
-| `batch/logs/{num}-{id}.log` | Full worker output per offer |
-| `batch/batch-state.tsv` | Run state: status, score, timestamps per offer |
-| `batch/tracker-additions/` | TSV lines pending merge |
-| `reports/{num}-{slug}-{date}.md` | Evaluation reports |
-| `output/{num}-{slug}.pdf` | Generated CVs |
-
-After the run completes, tracker lines are automatically merged into `data/applications.md`. To merge manually:
+The batch is **resumable** — re-running skips completed offers automatically.
 
 ```bash
-npm run merge          # Merge tracker additions
+npm run merge          # Merge tracker additions after batch
 npm run verify         # Check pipeline integrity
 ```
 
-The batch is **resumable** -- if interrupted, re-running picks up where it left off. Completed offers are skipped automatically.
-
 ## Gemini CLI Integration
 
-Career-ops supports [Gemini CLI](https://github.com/google-gemini/gemini-cli) natively. All 15 slash commands are available using the same `modes/*.md` evaluation logic.
-
-### Option A — Native Gemini CLI (Recommended)
+Career-ops supports [Gemini CLI](https://github.com/google-gemini/gemini-cli) natively. All 15 slash commands work using the same `modes/*.md` evaluation logic.
 
 ```bash
-# 1. Install Gemini CLI
 npm install -g @google/gemini-cli
-
-# 2. Authenticate (free — uses your Google account)
-gemini auth
-
-# 3. Run in the career-ops directory
+gemini auth          # free — uses your Google account
 cd career-ops && gemini
 
-# 4. Use slash commands just like Claude Code
 /career-ops "Senior AI Engineer at Anthropic..."
 /career-ops-scan
 /career-ops-pdf
-/career-ops-tracker
 ```
 
-The `GEMINI.md` file is auto-loaded as context. All 15 commands are defined in `.gemini/commands/*.toml`.
-
-### Option B — Standalone API Script
-
-```bash
-# 1. Get a free API key at https://aistudio.google.com/apikey
-cp .env.example .env   # Set GEMINI_API_KEY=your_key_here
-
-# 2. Install dependencies
-npm install
-
-# 3. Evaluate a job description
-node gemini-eval.mjs "We are looking for a Senior AI Engineer..."
-node gemini-eval.mjs --file ./jds/my-job.txt
-```
-
-> **Free tier:** Native CLI uses Google OAuth; the API script uses `gemini-2.0-flash` (15 RPM, 1M tokens/day free).
+`GEMINI.md` is auto-loaded as context. Commands are defined in `.gemini/commands/*.toml`.
 
 ## How It Works
 
@@ -268,18 +205,9 @@ You paste a job URL or description
 
 ## Pre-configured Portals
 
-The scanner comes with **45+ companies** ready to scan and **19 search queries** across major job boards. Copy `templates/portals.example.yml` to `portals.yml` and add your own:
+**45+ companies** across AI Labs, Voice AI, LLMOps, Automation, Enterprise, and European markets — plus **19 search queries** across Ashby, Greenhouse, Lever, Wellfound, Workable, and RemoteFront.
 
-**AI Labs:** Anthropic, OpenAI, Mistral, Cohere, LangChain, Pinecone
-**Voice AI:** ElevenLabs, PolyAI, Parloa, Hume AI, Deepgram, Vapi, Bland AI
-**AI Platforms:** Retool, Airtable, Vercel, Temporal, Glean, Arize AI
-**Contact Center:** Ada, LivePerson, Sierra, Decagon, Talkdesk, Genesys
-**Enterprise:** Salesforce, Twilio, Gong, Dialpad
-**LLMOps:** Langfuse, Weights & Biases, Lindy, Cognigy, Speechmatics
-**Automation:** n8n, Zapier, Make.com
-**European:** Factorial, Attio, Tinybird, Clarity AI, Travelperk
-
-**Job boards searched:** Ashby, Greenhouse, Lever, Wellfound, Workable, RemoteFront
+Copy `templates/portals.example.yml` to `portals.yml` and customize. Ask Claude to add any company you want.
 
 ## Dashboard TUI
 
