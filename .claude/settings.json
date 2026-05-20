@@ -1,6 +1,12 @@
 {
   "permissions": {
-    "allow": ["WebFetch", "WebSearch"]
+    "allow": [
+      "WebFetch",
+      "WebSearch",
+      "Bash(awk -F'\\t' *)",
+      "Bash(kill -0 *)",
+      "Bash(node update-system.mjs check)"
+    ]
   },
   "hooks": {
     "Stop": [
