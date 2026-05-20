@@ -135,7 +135,23 @@ rows.sort((a, b) => a.num.padStart(6, '0').localeCompare(b.num.padStart(6, '0'))
 
 if (batchMode) {
   fs.mkdirSync(BATCHES_DIR, { recursive: true });
-  writeCSV(rows, path.join(BATCHES_DIR, `${buildTimestamp()}.csv`));
+
+  const seenNums = new Set();
+  for (const existing of fs.readdirSync(BATCHES_DIR).filter(f => f.endsWith('.csv')).sort()) {
+    const lines = fs.readFileSync(path.join(BATCHES_DIR, existing), 'utf8').split('\n').slice(1);
+    for (const line of lines) {
+      if (!line.trim()) continue;
+      const num = line.split(',')[0].replace(/^"|"$/g, '');
+      if (num) seenNums.add(num);
+    }
+  }
+
+  const newRows = rows.filter(r => !seenNums.has(r.num));
+  if (newRows.length === 0) {
+    console.log('No new reports — all already in a previous batch CSV.');
+    process.exit(0);
+  }
+  writeCSV(newRows, path.join(BATCHES_DIR, `${buildTimestamp()}.csv`));
 } else {
   writeCSV(rows, MASTER_CSV);
 }
