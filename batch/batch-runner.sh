@@ -28,6 +28,7 @@ RETRY_FAILED=false
 START_FROM=0
 MAX_RETRIES=2
 MIN_SCORE=0
+RATE_LIMITED=false
 
 usage() {
   cat <<'USAGE'
@@ -385,6 +386,12 @@ process_offer() {
     update_state "$id" "$url" "completed" "$started_at" "$completed_at" "$report_num" "$score" "-" "$retries"
     echo "    ✅ Completed (score: $score, report: $report_num)"
   else
+    if grep -q "You've hit your limit" "$log_file" 2>/dev/null; then
+      update_state "$id" "$url" "rate_limited" "$started_at" "$completed_at" "$report_num" "-" "rate-limit-hit" "$retries"
+      echo "    ⏸️  Rate limited — aborting batch (rerun after limit resets)"
+      RATE_LIMITED=true
+      return 0
+    fi
     retries=$((retries + 1))
     local error_msg
     error_msg=$(tail -5 "$log_file" 2>/dev/null | tr '\n' ' ' | cut -c1-200 || echo "Unknown error (exit code $exit_code)")
@@ -420,7 +427,7 @@ print_summary() {
     return
   fi
 
-  local total=0 completed=0 failed=0 pending=0
+  local total=0 completed=0 failed=0 pending=0 rate_limited=0
   local score_sum=0 score_count=0
 
   while IFS=$'\t' read -r sid _ sstatus _ _ _ sscore _ _; do
@@ -434,11 +441,12 @@ print_summary() {
         fi
         ;;
       failed) failed=$((failed + 1)) ;;
+      rate_limited) rate_limited=$((rate_limited + 1)) ;;
       *) pending=$((pending + 1)) ;;
     esac
   done < "$STATE_FILE"
 
-  echo "Total: $total | Completed: $completed | Failed: $failed | Pending: $pending"
+  echo "Total: $total | Completed: $completed | Failed: $failed | Rate-limited: $rate_limited | Pending: $pending"
 
   if (( score_count > 0 )); then
     local avg
@@ -556,6 +564,14 @@ main() {
     # Sequential processing
     for i in "${!pending_ids[@]}"; do
       process_offer "${pending_ids[$i]}" "${pending_urls[$i]}" "${pending_sources[$i]}" "${pending_notes[$i]}"
+      if [[ "$RATE_LIMITED" == "true" ]]; then
+        local remaining=$(( pending_count - i - 1 ))
+        if (( remaining > 0 )); then
+          echo ""
+          echo "⏸️  $remaining offer(s) skipped — will be processed on next run."
+        fi
+        break
+      fi
     done
   else
     # Parallel processing with job control
