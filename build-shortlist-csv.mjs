@@ -98,16 +98,35 @@ const allFiles = fs.readdirSync(REPORTS_DIR)
   .sort();
 
 let filesToProcess = allFiles;
+let batchOutPath = null;
 
 if (batchMode) {
-  const batchNums = readBatchReportNums();
-  if (batchNums.size === 0) {
-    console.log('No completed reports found in batch-state.tsv — skipping batch CSV.');
-    process.exit(0);
+  fs.mkdirSync(BATCHES_DIR, { recursive: true });
+
+  // Pick a unique output filename before reading seenNums, so we never overwrite an existing file
+  const base = buildTimestamp();
+  let outName = `${base}.csv`;
+  let counter = 1;
+  while (fs.existsSync(path.join(BATCHES_DIR, outName))) {
+    outName = `${base}_${counter++}.csv`;
   }
+  batchOutPath = path.join(BATCHES_DIR, outName);
+
+  const seenNums = new Set();
+  for (const existing of fs.readdirSync(BATCHES_DIR).filter(f => f.endsWith('.csv')).sort()) {
+    const lines = fs.readFileSync(path.join(BATCHES_DIR, existing), 'utf8').split('\n').slice(1);
+    for (const line of lines) {
+      if (!line.trim()) continue;
+      // Strip leading zeros so "001" and "1" both normalize to "1"
+      const raw = line.split(',')[0].replace(/^"|"$/g, '');
+      const num = raw.replace(/^0+/, '') || '0';
+      if (num) seenNums.add(num);
+    }
+  }
+  // Include any report not yet in a batch CSV (batch-run or manually evaluated)
   filesToProcess = allFiles.filter(f => {
     const num = f.match(/^(\d+)/)?.[1]?.replace(/^0+/, '') || '0';
-    return batchNums.has(num);
+    return !seenNums.has(num);
   });
 }
 
@@ -124,24 +143,11 @@ for (const file of filesToProcess) {
 rows.sort((a, b) => a.num.padStart(6, '0').localeCompare(b.num.padStart(6, '0')));
 
 if (batchMode) {
-  fs.mkdirSync(BATCHES_DIR, { recursive: true });
-
-  const seenNums = new Set();
-  for (const existing of fs.readdirSync(BATCHES_DIR).filter(f => f.endsWith('.csv')).sort()) {
-    const lines = fs.readFileSync(path.join(BATCHES_DIR, existing), 'utf8').split('\n').slice(1);
-    for (const line of lines) {
-      if (!line.trim()) continue;
-      const num = line.split(',')[0].replace(/^"|"$/g, '');
-      if (num) seenNums.add(num);
-    }
-  }
-
-  const newRows = rows.filter(r => !seenNums.has(r.num));
-  if (newRows.length === 0) {
+  if (rows.length === 0) {
     console.log('No new reports — all already in a previous batch CSV.');
     process.exit(0);
   }
-  writeCSV(newRows, path.join(BATCHES_DIR, `${buildTimestamp()}.csv`));
+  writeCSV(rows, batchOutPath);
 } else {
   writeCSV(rows, MASTER_CSV);
 }
