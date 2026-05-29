@@ -66,21 +66,11 @@ function readBatchReportNums() {
   if (!fs.existsSync(BATCH_STATE)) return new Set();
   const lines = fs.readFileSync(BATCH_STATE, 'utf8').split('\n');
 
-  // Parse all data rows
-  const rows = [];
+  const nums = new Set();
   for (const line of lines) {
     const cols = line.split('\t');
-    if (cols[0] === 'id' || !cols[3]) continue;
-    rows.push({ startedAt: cols[3].trim(), reportNum: cols[5]?.trim() });
-  }
-  if (rows.length === 0) return new Set();
-
-  // Only include rows from the most recent batch session (same UTC date as latest entry)
-  const latestDate = rows.map(r => r.startedAt.slice(0, 10)).sort().at(-1);
-  const nums = new Set();
-  for (const row of rows) {
-    if (row.startedAt.slice(0, 10) !== latestDate) continue;
-    const num = row.reportNum;
+    if (cols[0] === 'id' || cols[2]?.trim() !== 'completed') continue;
+    const num = cols[5]?.trim();
     if (num && num !== '-') nums.add(num.replace(/^0+/, '') || '0');
   }
   return nums;
